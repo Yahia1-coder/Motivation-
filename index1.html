@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Motivation for Nour ✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Animated background stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            color: #764ba2;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .message-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            line-height: 1.6;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .message-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .date-display {
+            color: #764ba2;
+            font-size: 1.1em;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .locked-message {
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        .exam-countdown {
+            margin-top: 20px;
+            color: #667eea;
+            font-size: 1em;
+        }
+
+        .heart {
+            color: #f5576c;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .motivation-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        /* Special styling for the final message */
+        .final-message {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            animation: rainbow 3s ease-in-out infinite;
+        }
+
+        @keyframes rainbow {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(30deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <h1>Daily Motivation for Nour <span class="heart">❤️</span></h1>
+        <p class="subtitle">Your journey to success, one day at a time</p>
+        
+        <div class="message-box" id="messageBox">
+            <div id="messageContent">
+                <div class="motivation-icon">✨</div>
+                <p>Loading your daily motivation...</p>
+            </div>
+        </div>
+        
+        <div class="date-display" id="dateDisplay"></div>
+        <div class="exam-countdown" id="countdown"></div>
+    </div>
+
+    <script>
+        // Messages for each day
+        const messages = {
+            '2025-06-08': {
+                text: "Dear Nour, today marks the beginning of your journey to greatness! Remember, you've prepared for this moment. Every hour of study, every sacrifice has led to this. You are capable, you are ready, and you will succeed! 🌟",
+                icon: "🚀"
+            },
+            '2025-06-09': {
+                text: "Day 2: The hardest step was starting, and you've already done that! Today, trust in your preparation. Your mind is sharp, your spirit is strong, and your determination is unbreakable. Keep going, warrior! 💪",
+                icon: "🌈"
+            },
+            '2025-06-10': {
+                text: "Day 3: Remember why you started this journey. Your dreams are valid, your goals are achievable, and your future is bright. Take deep breaths, stay focused, and know that you're doing amazingly! 🌺",
+                icon: "🎯"
+            },
+            '2025-06-11': {
+                text: "Day 4: You're not just taking an exam, you're building your future! Every question you answer is a step toward your dreams. Stay confident, stay calm, and remember: you've got this! ⭐",
+                icon: "🏆"
+            },
+            '2025-06-12': {
+                text: "Day 5: Halfway through the first week! Your persistence is inspiring. When things feel tough, remember that diamonds are formed under pressure. You're becoming stronger with each passing day! 💎",
+                icon: "🌟"
+            },
+            '2025-06-13': {
+                text: "Day 6: Six days of pure dedication! Your commitment is extraordinary. Trust your instincts, believe in your knowledge, and let your brilliance shine through. The universe is conspiring for your success! ✨",
+                icon: "🎓"
+            },
+            '2025-06-14': {
+                text: "Day 7: One week down! You've shown incredible strength and resilience. Today, celebrate how far you've come while keeping your eyes on the prize. Your future self will thank you for this effort! 🌸",
+                icon: "👑"
+            },
+            '2025-06-15': {
+                text: "Day 8: Sunday again, but this time you're a week stronger, a week wiser! Rest when you need to, push when you can, and always remember that you are capable of extraordinary things! 🦋",
+                icon: "💫"
+            },
+            '2025-06-16': {
+                text: "Day 9: You're in the final stretch now! Your determination has brought you this far, and it will carry you to the finish line. Keep your head high and your spirits higher! 🌞",
+                icon: "🎨"
+            },
+            '2025-06-17': {
+                text: "Day 10: Double digits! You've proven that you can do hard things. Today, channel all your energy into showing what you know. Your knowledge is your superpower, use it wisely! 📚",
+                icon: "🌺"
+            },
+            '2025-06-18': {
+                text: "Day 11: Tomorrow is the final day! Tonight, rest well knowing you've given your all. You've faced this challenge with grace and strength. One more day to show the world your brilliance! 🌙",
+                icon: "💝"
+            },
+            '2025-06-19': {
+                text: "CONGRATULATIONS NOUR! 🎉 You did it! You've completed this monumental journey! I'm so incredibly proud of you. You've shown courage, determination, and brilliance throughout these 12 days. Your future is as bright as your spirit, and this is just the beginning of your amazing story. You are destined for greatness! With all my love and admiration, always remember: you are capable of achieving anything you set your mind to! ❤️✨🎓",
+                icon: "🎊",
+                special: true
+            }
+        };
+
+        // Function to create stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Function to get today's date in the correct format
+        function getTodayDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Function to display the message
+        function displayMessage() {
+            const today = getTodayDate();
+            const messageBox = document.getElementById('messageBox');
+            const messageContent = document.getElementById('messageContent');
+            const dateDisplay = document.getElementById('dateDisplay');
+            
+            // Display current date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateDisplay.textContent = new Date().toLocaleDateString('en-US', options);
+            
+            // Check if there's a message for today
+            if (messages[today]) {
+                const todayMessage = messages[today];
+                messageContent.innerHTML = `
+                    <div class="motivation-icon">${todayMessage.icon}</div>
+                    <p>${todayMessage.text}</p>
+                `;
+                
+                if (todayMessage.special) {
+                    messageBox.classList.add('final-message');
+                }
+            } else {
+                // Check if we're before June 8 or after June 19
+                const currentDate = new Date();
+                const startDate = new Date('2025-06-08');
+                const endDate = new Date('2025-06-19');
+                
+                if (currentDate < startDate) {
+                    messageContent.innerHTML = `
+                        <div class="motivation-icon">⏳</div>
+                        <p class="locked-message">Your motivational journey begins on June 8th, 2025. Come back then for your first message!</p>
+                    `;
+                } else if (currentDate > endDate) {
+                    messageContent.innerHTML = `
+                        <div class="motivation-icon">🌟</div>
+                        <p>The exam period has ended. Nour, you've completed an incredible journey! Always remember how strong and capable you are!</p>
+                    `;
+                }
+            }
+            
+            // Update countdown
+            updateCountdown();
+        }
+
+        // Function to update countdown
+        function updateCountdown() {
+            const countdown = document.getElementById('countdown');
+            const endDate = new Date('2025-06-19');
+            const today = new Date();
+            
+            if (today <= endDate) {
+                const daysLeft = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+                if (daysLeft > 0) {
+                    countdown.textContent = `${daysLeft} day${daysLeft > 1 ? 's' : ''} until you complete this journey! 💪`;
+                } else {
+                    countdown.textContent = "Today is the final day! Give it your all! 🌟";
+                }
+            }
+        }
+
+        // Initialize
+        createStars();
+        displayMessage();
+        
+        // Update every minute to catch date changes
+        setInterval(displayMessage, 60000);
+    </script>
+</body>
+</html>
