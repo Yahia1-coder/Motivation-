@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Résultats BAC 2025 Dz</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #00796b;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #00796b;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    .result {
+      margin-top: 20px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .congrats {
+      font-size: 24px;
+      color: #4caf50;
+      font-weight: bold;
+      animation: popIn 1s ease-in-out;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes popIn {
+      0% {transform: scale(0.7); opacity: 0;}
+      100% {transform: scale(1); opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Résultats BAC 2025</h2>
+  <input type="text" id="studentId" placeholder="Entrez votre ID">
+  <button onclick="checkResult()">Voir Résultat</button>
+  <div id="resultBox"></div>
+</div>
+
+<audio id="cheerAudio" src="https://www.soundjay.com/human/applause-8.mp3" preload="auto"></audio>
+
+<script>
+  function checkResult() {
+    const id = document.getElementById('studentId').value.trim();
+    const resultBox = document.getElementById('resultBox');
+    const cheer = document.getElementById('cheerAudio');
+
+    // Reset
+    resultBox.innerHTML = "";
+
+    const correctId = "12345";
+    const studentResult = {
+      name: "Baffa Nour",
+      id: "12345",
+      average: 16.75,
+      mention: "TRÈS BIEN"
+    };
+
+    if (id === correctId) {
+      // Confetti
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
+      // Sound
+      cheer.play();
+
+      // Show result
+      resultBox.innerHTML = `
+        <div class="congrats">🎉 Félicitations ! 🎉</div>
+        <div class="result">
+          <p><strong>Nom:</strong> ${studentResult.name}</p>
+          <p><strong>ID:</strong> ${studentResult.id}</p>
+          <p><strong>Moyenne:</strong> ${studentResult.average}</p>
+          <p><strong>Mention:</strong> ${studentResult.mention}</p>
+        </div>
+      `;
+    } else {
+      resultBox.innerHTML = '<p class="error">ID non trouvé. Veuillez réessayer.</p>';
+    }
+  }
+</script>
+
+</body>
+</html>
